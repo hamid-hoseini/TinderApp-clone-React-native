@@ -14,6 +14,57 @@
   - React Navigation Native [link](https://reactnavigation.org/)
   - React Native Screens
   - Native Stack Navigator [link](https://reactnavigation.org/docs/hello-react-navigation)
+  - Expo Google App Auth [link](https://www.npmjs.com/package/expo-google-app-auth)
 
 
-Note: let's use expo to install react-native-screens react-native-safe-area-context
+Note: let's use expo to install: 
+  - react-native-screens 
+  - react-native-safe-area-context
+  - expo-google-app-auth
+
+
+## React Context Example
+
+> Use react context and create custom Hook
+```jsx
+const AuthContext = createContext({})
+
+export const AuthProvider = ({ children }) => {
+  return (
+    <AuthContext.Provider value={{
+      user: "Hamid"
+    }}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
+
+export default function useAuth() {
+  return useContext(AuthContext);
+}
+```
+
+> The way to use custom Hook
+
+```jsx
+const LoginScreen = () => {
+
+  const { user } = useAuth();
+
+  return (
+    <View>
+      <Text>Welcome { user }!</Text>
+    </View>
+  )
+}
+
+export default LoginScreen
+
+const styles = StyleSheet.create({})
+```
+
+
+### Supported platform
+
+- Ios
+- Android
