@@ -6,7 +6,7 @@ const LoginScreen = () => {
   const { signInWithGoogle } = useAuth();
 
   const { user } = useAuth();
-  console.log(user)
+
   return (
     <View>
       <Text>Welcome { user }!</Text>
