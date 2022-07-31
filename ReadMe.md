@@ -20,11 +20,14 @@
   - React Native Dotenv [link](https://www.npmjs.com/package/react-native-dotenv)
 
 
-Note: let's use expo to install: 
+Note 1: 
+  let's use expo to install: 
   - react-native-screens 
   - react-native-safe-area-context
   - firebase
 
+Note 2:
+  By using React Native Dotenv to protect important keys we need to configure `babe.config.js` but it will run into issues. So to resolve the issues read: [link](https://github.com/goatandsheep/react-native-dotenv#caveats) 
 
 ## React Context Example
 

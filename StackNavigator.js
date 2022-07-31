@@ -10,7 +10,7 @@ import RegisterScreen from './screens/RegisterScreen';
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  const { user } = useAuth();
+  const { user } = useAuth(); // or useAuth ???
   return (
       <Stack.Navigator>
         { user ? (

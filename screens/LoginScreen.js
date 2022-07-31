@@ -1,13 +1,17 @@
 import { StyleSheet, Text, View, Button, KeyboardAvoidingView } from 'react-native'
-import useAuth from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import { useEffect, useState } from 'react'
 import { auth } from '../firebaseConfig'
 
 const LoginScreen = () => {
   const { signInWithGoogle } = useAuth();
   const { user } = useAuth();
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [name, setName]= useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { signIn } = useAuth();
+  const navigation = useNavigation();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -20,12 +24,22 @@ const LoginScreen = () => {
     return unsubscribe;
   }, []);
 
-
-  const signIn = () => {
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .catch(err => alert(err));
+  const logIn = () => {
+    try {
+      setError("");
+      await signIn(email, password);
+      navigation.navigate('Home');
+    } catch (err) {
+      setError(err.message);
+    }
   }
+
+  // const signIn = () => {
+  //   auth
+  //     .signInWithEmailAndPassword(email, password)
+  //     .catch(err => alert(err));
+
+  // }
 
   
   return (

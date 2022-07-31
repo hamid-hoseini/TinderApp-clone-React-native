@@ -4,22 +4,34 @@ import { Input, Image, Text } from '@rneui/themed';
 import { Button } from '@rneui/base';
 import { StatusBar } from 'expo-status-bar';
 import { auth } from '../firebaseConfig';
+import { useAuth } from '../hooks/useAuth';
+import { useNavigation } from '@react-navigation/native';
 
 const RegisterScreen = ({ navigation }) => {
   const [name, setName]= useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const register = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        authUser.user.updateProfile({
-          displayName: name,
-          photoURL: null
-        })
-      }).catch((error) => {
-        alert(error.message)
-      })
+  const [error, setError] = useState("");
+  const { signUp } = useAuth();
+  const navigation = useNavigation();
+  const register = async () => {
+    // auth
+    //   .createUserWithEmailAndPassword(email, password)
+    //   .then((authUser) => {
+    //     authUser.user.updateProfile({
+    //       displayName: name,
+    //       photoURL: null
+    //     })
+    //   }).catch((error) => {
+    //     alert(error.message)
+    //   })
+    try {
+      setError("");
+      await signUp(email, password);
+      navigation.navigate('Home');
+    } catch (err) {
+      setError(err.message);
+    }
   }
 
   useLayoutEffect(() => {
