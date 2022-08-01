@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View, Button, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, View, KeyboardAvoidingView } from 'react-native'
+import { Input, Image, ThemeProvider } from '@rneui/themed'
+import { Button } from '@rneui/base'
 import { useAuth } from '../hooks/useAuth';
 import { useEffect, useState } from 'react'
 import { auth } from '../firebaseConfig'
 
 const LoginScreen = () => {
-  const { signInWithGoogle } = useAuth();
-  const { user } = useAuth();
+  // const { signInWithGoogle } = useAuth();
+  // const { user } = useAuth();
   const [name, setName]= useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +26,7 @@ const LoginScreen = () => {
     return unsubscribe;
   }, []);
 
-  const logIn = () => {
+  const logIn = async () => {
     try {
       setError("");
       await signIn(email, password);
@@ -64,10 +66,10 @@ const LoginScreen = () => {
           type="password"  
           value={password}
           onChangeText={(text) => setPassword(text)}
-          onSubmitEditing={signIn}
+          onSubmitEditing={logIn}
         />
       </View>
-      <Button raised containerStyle={styles.button} onPress={signIn} title="Sign In" />
+      <Button raised containerStyle={styles.button} onPress={logIn} title="Sign In" />
       <Button containerStyle={styles.button} type="link" onPress={() => navigation.navigate('Register')} title="Register" />
       <View style={{ height: 150}} />
     </KeyboardAvoidingView>

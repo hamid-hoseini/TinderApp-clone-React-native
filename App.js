@@ -6,6 +6,7 @@ import { AuthProvider } from './hooks/useAuth';
 import StackNavigator from './StackNavigator';
 
 export default function App() {
+  console.log('here app');
   return (
     <NavigationContainer>
       {/* HOC - Higher Order Component*/}

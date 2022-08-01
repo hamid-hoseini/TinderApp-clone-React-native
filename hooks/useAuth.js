@@ -1,6 +1,4 @@
-import { View, Text } from 'react-native'
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import * as Google from 'expo-google-app-auth';
 import { auth } from '../firebaseConfig';
 import {
   createUserWithEmailAndPassword,
@@ -17,7 +15,7 @@ const config = {
   permissions: ["public_profile", "email", "gender", "location"],
 }
 
-export const AuthProvider = ({ children, email, password }) => {
+export const AuthProvider = ({ children }) => {
   // const signInWithGoogle = async () => {
   //   await Google.logInAsync(config).then(async (logInResult) => {
   //     if (logInResult.type === "success") {

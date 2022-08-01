@@ -3,11 +3,11 @@ import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { Input, Image, Text } from '@rneui/themed';
 import { Button } from '@rneui/base';
 import { StatusBar } from 'expo-status-bar';
-import { auth } from '../firebaseConfig';
+// import { auth } from '../firebaseConfig';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
 
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = () => {
   const [name, setName]= useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
