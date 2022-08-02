@@ -9,18 +9,19 @@ const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
   const { user } = useAuth();
+  // const user = false;
   console.log('here');
   return (
       <Stack.Navigator>
         { user ? (
           <>
-          {/* <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Chat" component={ChatScreen} /> */}
+          <Stack.Screen name="Home" component={HomeScreen} />
+          {/*<Stack.Screen name="Chat" component={ChatScreen} /> */}
           </>
         ) : (
           <>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          {/* <Stack.Screen name="Register" component={RegisterScreen} /> */}
+          {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
+          <Stack.Screen name="Register" component={RegisterScreen} />
           </>
         )}
       

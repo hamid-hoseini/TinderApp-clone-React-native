@@ -3,7 +3,6 @@ import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { Input, Image, Text } from '@rneui/themed';
 import { Button } from '@rneui/base';
 import { StatusBar } from 'expo-status-bar';
-// import { auth } from '../firebaseConfig';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
 
@@ -15,16 +14,6 @@ const RegisterScreen = () => {
   const { signUp } = useAuth();
   const navigation = useNavigation();
   const register = async () => {
-    // auth
-    //   .createUserWithEmailAndPassword(email, password)
-    //   .then((authUser) => {
-    //     authUser.user.updateProfile({
-    //       displayName: name,
-    //       photoURL: null
-    //     })
-    //   }).catch((error) => {
-    //     alert(error.message)
-    //   })
     try {
       setError("");
       await signUp(email, password);

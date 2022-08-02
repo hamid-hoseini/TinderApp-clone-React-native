@@ -21,16 +21,16 @@
   - React Native Elements [link](https://reactnativeelements.com/docs)
 
 
-Note 1: 
+##### Note 1: 
 
   let's use expo to install: 
   - react-native-screens 
   - react-native-safe-area-context
   - firebase
 
-Note 2:
+##### Note 2:
 
-  By using React Native Dotenv to protect important keys we need to configure `babe.config.js` but it will run into issues. Environment changes won’t be picked up and that is because of cache issue. So to resolve the issues we need to clear the cache:
+  By using React Native Dotenv to protect important keys we need to configure `babel.config.js` but it will run into issues. Environment changes won’t be picked up and that is because of cache issue. So to resolve the issues we need to clear the cache:
 
 >     rm -rf node_modules/.cache/babel-loader/*
 >     expo r -c

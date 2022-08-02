@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged
-} from 'firebase/auth'
+} from 'firebase/auth';
 
 const AuthContext = createContext({})
 const config = {
@@ -16,14 +16,7 @@ const config = {
 }
 
 export const AuthProvider = ({ children }) => {
-  // const signInWithGoogle = async () => {
-  //   await Google.logInAsync(config).then(async (logInResult) => {
-  //     if (logInResult.type === "success") {
-  //       // login...
-  //     }
-  //   })
-
-  const [user, setUser] = useState
+  const [user, setUser] = useState("");
 
   function signUp(email, password) {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -33,24 +26,24 @@ export const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   }
 
-  function logOut() {
-    return signOut(auth);
-  }
+  // function logOut() {
+  //   return signOut(auth);
+  // }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+    });
     return unsubscribe;
-    }, []);
-  })
+  }, [])
   
 
   return (
     <AuthContext.Provider value={{
       user,
-      signIn,
-      signUp,
-      logOut
+      //signIn,
+     signUp,
+      // logOut
     }}>
       {children}
     </AuthContext.Provider>

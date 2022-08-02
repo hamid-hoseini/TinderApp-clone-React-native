@@ -3,7 +3,8 @@ import { Input, Image, ThemeProvider } from '@rneui/themed'
 import { Button } from '@rneui/base'
 import { useAuth } from '../hooks/useAuth';
 import { useEffect, useState } from 'react'
-import { auth } from '../firebaseConfig'
+import { useNavigation } from '@react-navigation/native';
+import { auth } from '../firebaseConfig';
 
 const LoginScreen = () => {
   // const { signInWithGoogle } = useAuth();
@@ -16,14 +17,14 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      console.log(authUser);
-      if (authUser) {
-        navigation.replace('Home');
-      }
-    })
+    // const unsubscribe = auth.onAuthStateChanged((authUser) => {
+    //   console.log(authUser);
+    //   if (authUser) {
+    //     navigation.replace('Home');
+    //   }
+    // });
 
-    return unsubscribe;
+    // return unsubscribe;
   }, []);
 
   const logIn = async () => {
@@ -35,6 +36,9 @@ const LoginScreen = () => {
       setError(err.message);
     }
   }
+  // const logIn = () => {
+  //   return;
+  // }
 
   // const signIn = () => {
   //   auth
