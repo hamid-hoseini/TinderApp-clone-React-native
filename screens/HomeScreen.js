@@ -5,20 +5,20 @@ import { Button } from '@rneui/base'
 const HomeScreen = () => {
   //const {user, LogOut } = useAuth();
 
-  const handleLogOut = async () => {
-    // try {
-    //   await LogOut();
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    return;
-  }  
+  // const handleLogOut = async () => {
+  //   try {
+  //     await LogOut();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }  
 
 
   return (
     <View>
       <Text>HomeScreen</Text>
-      <Button onPress={handleLogOut} title="Log Out" />
+      {/* <Button onPress={handleLogOut} title="Log Out" /> */}
+      <Button title="Log Out" />
     </View>
   )
 }

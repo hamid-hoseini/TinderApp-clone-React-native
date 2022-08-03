@@ -1,10 +1,10 @@
 import { StyleSheet, View, KeyboardAvoidingView } from 'react-native'
 import { Input, Image, ThemeProvider } from '@rneui/themed'
 import { Button } from '@rneui/base'
-import { useAuth } from '../hooks/useAuth';
+// import { useAuth } from '../hooks/useAuth';
 import { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { auth } from '../firebaseConfig';
+// import { auth } from '../firebaseConfig';
 
 const LoginScreen = () => {
   // const { signInWithGoogle } = useAuth();
@@ -13,7 +13,7 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { signIn } = useAuth();
+  // const { signIn } = useAuth();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -27,18 +27,18 @@ const LoginScreen = () => {
     // return unsubscribe;
   }, []);
 
-  const logIn = async () => {
-    try {
-      setError("");
-      await signIn(email, password);
-      navigation.navigate('Home');
-    } catch (err) {
-      setError(err.message);
-    }
-  }
-  // const logIn = () => {
-  //   return;
+  // const logIn = async () => {
+  //   try {
+  //     setError("");
+  //     await signIn(email, password);
+  //     navigation.navigate('Home');
+  //   } catch (err) {
+  //     setError(err.message);
+  //   }
   // }
+  const logIn = () => {
+    return;
+  }
 
   // const signIn = () => {
   //   auth

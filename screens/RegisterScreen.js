@@ -3,7 +3,7 @@ import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { Input, Image, Text } from '@rneui/themed';
 import { Button } from '@rneui/base';
 import { StatusBar } from 'expo-status-bar';
-import { useAuth } from '../hooks/useAuth';
+// import { useAuth } from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
 
 const RegisterScreen = () => {
@@ -11,16 +11,19 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { signUp } = useAuth();
+  // const { signUp } = useAuth();
   const navigation = useNavigation();
-  const register = async () => {
-    try {
-      setError("");
-      await signUp(email, password);
-      navigation.navigate('Home');
-    } catch (err) {
-      setError(err.message);
-    }
+  // const register = async () => {
+  //   try {
+  //     setError("");
+  //     await signUp(email, password);
+  //     navigation.navigate('Home');
+  //   } catch (err) {
+  //     setError(err.message);
+  //   }
+  // }
+  const register = () => {
+    return;
   }
 
   useLayoutEffect(() => {
