@@ -1,20 +1,24 @@
+import 'react-native-gesture-handler';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import tw from 'tailwind-react-native-classnames';
-import { AuthProvider } from './hooks/useAuth';
 import StackNavigator from './StackNavigator';
+import { AuthProvider } from './hooks/useAuth';
+
+const globalScreenOptions = {
+  headerStyle: { backgroundColor: "lightgreen" },
+  headerTitleStyle: { color: "white" },
+  headerTintColor: "white"
+}
 
 export default function App() {
-  console.log('here app');
   return (
     <NavigationContainer>
-      {/* HOC - Higher Order Component*/}
       <AuthProvider>
-        {/* Passes down the cool auth stuff to children... */}
         <StackNavigator />
       </AuthProvider>
     </NavigationContainer>
   );
 }
 
+const styles = StyleSheet.create({
+});

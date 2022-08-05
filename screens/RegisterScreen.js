@@ -3,7 +3,8 @@ import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { Input, Image, Text } from '@rneui/themed';
 import { Button } from '@rneui/base';
 import { StatusBar } from 'expo-status-bar';
-// import { useAuth } from '../hooks/useAuth';
+import { auth } from '../firebaseConfig';
+import useAuth from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
 
 const RegisterScreen = () => {
@@ -11,20 +12,32 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  // const { signUp } = useAuth();
+  const { signUp } = useAuth();
   const navigation = useNavigation();
-  // const register = async () => {
-  //   try {
-  //     setError("");
-  //     await signUp(email, password);
-  //     navigation.navigate('Home');
-  //   } catch (err) {
-  //     setError(err.message);
-  //   }
+
+  // const register = () => {
+  //   auth
+  //     .createUserWithEmailAndPassword(email, password)
+  //     .then((authUser) => {
+  //       authUser.user.updateProfile({
+  //         displayName: name,
+  //         photoURL: null
+  //       })
+  //     }).catch((error) => {
+  //       alert(error.message)
+  //     })
   // }
-  const register = () => {
-    return;
+
+  const register = async () => {
+    try {
+      setError("");
+      await signUp(email, password);
+      navigation.navigate('Home');
+    } catch (err) {
+      setError(err.message);
+    }
   }
+
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -36,7 +49,7 @@ const RegisterScreen = () => {
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <StatusBar style="light" />
       <Image 
-        source={{uri: 'https://mobileappsshowdown.com/wp-content/uploads/2020/07/Tinder.jpg'}} 
+        source={{uri: 'https://cdn.iconscout.com/icon/free/png-256/user-circle-plus-3605378-3005458.png'}} 
         style={styles.image}
       />
       <Text h6 style={{ marginBottom: 50 }}>

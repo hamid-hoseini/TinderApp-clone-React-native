@@ -1,61 +1,51 @@
 import { StyleSheet, View, KeyboardAvoidingView } from 'react-native'
 import { Input, Image, ThemeProvider } from '@rneui/themed'
 import { Button } from '@rneui/base'
-// import { useAuth } from '../hooks/useAuth';
 import { useEffect, useState } from 'react'
+import { auth } from '../firebaseConfig'
 import { useNavigation } from '@react-navigation/native';
-// import { auth } from '../firebaseConfig';
+import useAuth from '../hooks/useAuth';
 
 const LoginScreen = () => {
-  // const { signInWithGoogle } = useAuth();
-  // const { user } = useAuth();
-  const [name, setName]= useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  // const { signIn } = useAuth();
   const navigation = useNavigation();
+  const { signIn } = useAuth();
 
   useEffect(() => {
-    // const unsubscribe = auth.onAuthStateChanged((authUser) => {
-    //   console.log(authUser);
-    //   if (authUser) {
-    //     navigation.replace('Home');
-    //   }
-    // });
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      //console.log(authUser);
+      if (authUser) {
+        navigation.navigate('Home');
+      }
+    })
 
-    // return unsubscribe;
+    return unsubscribe;
   }, []);
 
-  // const logIn = async () => {
-  //   try {
-  //     setError("");
-  //     await signIn(email, password);
-  //     navigation.navigate('Home');
-  //   } catch (err) {
-  //     setError(err.message);
-  //   }
-  // }
-  const logIn = () => {
-    return;
-  }
 
   // const signIn = () => {
   //   auth
   //     .signInWithEmailAndPassword(email, password)
   //     .catch(err => alert(err));
-
   // }
 
-  
+  const logIn = async () => {
+    try {
+      setError("");
+      await signIn(email, password);
+      navigation.navigate('Home');
+    } catch (err) {
+      setError(err.message);
+      alert(err);
+    }
+  }
+
   return (
-    // <View>
-    //   <Text>Welcome { user }!</Text>
-    //   <Button title="login" onPress={signInWithGoogle} />
-    // </View>
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <Image 
-        source={{uri: 'https://mobileappsshowdown.com/wp-content/uploads/2020/07/Tinder.jpg'}} 
+        source={{uri: 'https://static.thenounproject.com/png/178831-200.png'}} 
         style={styles.image}
       />
       <View style={styles.inputContainer}>
@@ -70,7 +60,7 @@ const LoginScreen = () => {
           type="password"  
           value={password}
           onChangeText={(text) => setPassword(text)}
-          onSubmitEditing={logIn}
+          onSubmitEditing={signIn}
         />
       </View>
       <Button raised containerStyle={styles.button} onPress={logIn} title="Sign In" />

@@ -1,32 +1,48 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import HomeScreen from './screens/HomeScreen';
-import ChatScreen from './screens/ChatScreen';
+import 'react-native-gesture-handler';
+import { StyleSheet } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './screens/LoginScreen';
-// import useAuth from './hooks/useAuth';
 import RegisterScreen from './screens/RegisterScreen';
+import HomeScreen from './screens/HomeScreen';
+import AddChatScreen from './screens/AddChatScreen';
+import ChatScreen from './screens/ChatScreen';
+import useAuth from './hooks/useAuth';
 
-const Stack = createNativeStackNavigator();
-
-const StackNavigator = () => {
-  // const { user } = useAuth();
-   const user = false;
-  console.log('here');
-  return (
-      <Stack.Navigator>
-        { user ? (
-          <>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          {/*<Stack.Screen name="Chat" component={ChatScreen} /> */}
-          </>
-        ) : (
-          <>
-          {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
-          <Stack.Screen name="Register" component={RegisterScreen} />
-          </>
-        )}
-      
-      </Stack.Navigator>
-  )
+const Stack = createStackNavigator();
+const globalScreenOptions = {
+  headerStyle: { backgroundColor: "lightgreen" },
+  headerTitleStyle: { color: "white" },
+  headerTintColor: "white"
 }
 
-export default StackNavigator
+export default function StackNavigator() {
+  const { user } = useAuth();
+
+  return (
+    <Stack.Navigator 
+      initialRouteName='Home'
+      screenOptions={globalScreenOptions}>
+        { !user ? (
+          <>
+          <Stack.Screen options={{title: "Sign In"}} name="Login" component={LoginScreen} />  
+          <Stack.Screen name="Register" component={RegisterScreen} />  
+        </>
+        ) : (
+          <>
+          <Stack.Screen options={{headerLeft: () => { return null;}}} name="Home" component={HomeScreen} />  
+          <Stack.Screen name="AddChat" component={AddChatScreen} />  
+          <Stack.Screen name="Chat" component={ChatScreen} />  
+          </>
+        )}
+    </Stack.Navigator>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
