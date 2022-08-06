@@ -41,7 +41,9 @@ const RegisterScreen = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerBackTitle: 'Back to Login'
+      headerBackTitle: 'Back to Login',
+      headerTitleStyle: { color: "white" },
+      headerTintColor: "white"
     });
   }, [navigation]);
 
@@ -49,7 +51,7 @@ const RegisterScreen = () => {
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <StatusBar style="light" />
       <Image 
-        source={{uri: 'https://cdn.iconscout.com/icon/free/png-256/user-circle-plus-3605378-3005458.png'}} 
+        source={{uri: 'https://cdn2.iconfinder.com/data/icons/social-media-icons-23/800/tinder-512.png'}} 
         style={styles.image}
       />
       <Text h6 style={{ marginBottom: 50 }}>

@@ -10,9 +10,9 @@ import useAuth from './hooks/useAuth';
 
 const Stack = createStackNavigator();
 const globalScreenOptions = {
-  headerStyle: { backgroundColor: "lightgreen" },
-  headerTitleStyle: { color: "white" },
-  headerTintColor: "white"
+  headerStyle: { backgroundColor: "#FE4C6A" },
+  headerTitleStyle: { color: "black" },
+  headerTintColor: "black"
 }
 
 export default function StackNavigator() {
@@ -29,9 +29,9 @@ export default function StackNavigator() {
         </>
         ) : (
           <>
-          <Stack.Screen options={{headerLeft: () => { return null;}}} name="Home" component={HomeScreen} />  
           <Stack.Screen name="AddChat" component={AddChatScreen} />  
           <Stack.Screen name="Chat" component={ChatScreen} />  
+          <Stack.Screen options={{headerLeft: () => { return null;}}} name="Home" component={HomeScreen} />  
           </>
         )}
     </Stack.Navigator>

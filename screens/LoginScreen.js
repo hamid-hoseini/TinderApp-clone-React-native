@@ -1,7 +1,7 @@
 import { StyleSheet, View, KeyboardAvoidingView } from 'react-native'
 import { Input, Image, ThemeProvider } from '@rneui/themed'
 import { Button } from '@rneui/base'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { auth } from '../firebaseConfig'
 import { useNavigation } from '@react-navigation/native';
 import useAuth from '../hooks/useAuth';
@@ -11,31 +11,29 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigation = useNavigation();
-  const { signIn } = useAuth();
+  const { signIn, loading } = useAuth();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      //console.log(authUser);
-      if (authUser) {
-        navigation.navigate('Home');
-      }
-    })
+    // const unsubscribe = auth.onAuthStateChanged((authUser) => {
+    //   if (authUser) {
+    //     navigation.replace('Home');
+    //   }
+    // })
 
-    return unsubscribe;
+    // return unsubscribe;
   }, []);
 
-
-  // const signIn = () => {
-  //   auth
-  //     .signInWithEmailAndPassword(email, password)
-  //     .catch(err => alert(err));
-  // }
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false
+    });
+  }, [])
 
   const logIn = async () => {
     try {
       setError("");
       await signIn(email, password);
-      navigation.navigate('Home');
+      //navigation.navigate('HomePHomeage');
     } catch (err) {
       setError(err.message);
       alert(err);
@@ -45,7 +43,7 @@ const LoginScreen = () => {
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <Image 
-        source={{uri: 'https://static.thenounproject.com/png/178831-200.png'}} 
+        source={{uri: 'https://cdn2.iconfinder.com/data/icons/social-media-icons-23/800/tinder-512.png'}} 
         style={styles.image}
       />
       <View style={styles.inputContainer}>
@@ -63,7 +61,7 @@ const LoginScreen = () => {
           onSubmitEditing={signIn}
         />
       </View>
-      <Button raised containerStyle={styles.button} onPress={logIn} title="Sign In" />
+      <Button raised containerStyle={styles.button} color="#FE4C6A" onPress={logIn} title="Sign In" />
       <Button containerStyle={styles.button} type="link" onPress={() => navigation.navigate('Register')} title="Register" />
       <View style={{ height: 150}} />
     </KeyboardAvoidingView>
@@ -75,7 +73,8 @@ export default LoginScreen
 const styles = StyleSheet.create({
   image: {
     width: 120, 
-    height: 120
+    height: 120,
+    marginBottom: 50
   },
   container: {
     flex: 1,
@@ -89,6 +88,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 10
   },
+
   inputContainer: {
     width: 300
   }

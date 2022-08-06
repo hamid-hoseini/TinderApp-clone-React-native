@@ -3,11 +3,12 @@
 
 ## What I have learned in this project are:
 
-  1. Context api to provide a way to share values (global variables) like user info after authentication between components without having to explicitly pass a prop through every level of the tree.
-  2. Custom Hook: When we have component logic that needs to be used by multiple components, we can extract that logic to a custom Hook
-  3. Higher Order Component (HOC) is an advanced technique in React for reusing component logic. They are a pattern that emerges from React's compositional nature. Concretely, a higher-order component is a function that takes a component and returns a new component. [Read more...](https://reactjs.org/docs/higher-order-components.html)
+  1. **Context api** to provide a way to share values (global variables) like user info after authentication between components without having to explicitly pass a prop through every level of the tree.
+  2. **Custom Hook**: When we have component logic that needs to be used by multiple components, we can extract that logic to a custom Hook
+  3. **Higher Order Component (HOC)** is an advanced technique in React for reusing component logic. They are a pattern that emerges from React's compositional nature. Concretely, a higher-order component is a function that takes a component and returns a new component. [Read more...](https://reactjs.org/docs/higher-order-components.html)
   4. Using Environment variables and setup 
   5. Firebase authentication and sign in & sign up using email and password
+  6. Using **useMemo** to memoize expensive functions so that you can avoid calling them on every render. [Read more...](https://usehooks.com/useMemo/)
 
   ## Dependencies
   - Tailwind React Native Classnames [link](https://www.npmjs.com/package/tailwind-react-native-classnames)
@@ -16,10 +17,10 @@
   - React Navigation Native [link](https://reactnavigation.org/)
   - React Native Screens
   - Native Stack Navigator [link](https://reactnavigation.org/docs/hello-react-navigation)
-  - Expo Google App Auth [link](https://www.npmjs.com/package/expo-google-app-auth)
   - React Native Dotenv [link](https://www.npmjs.com/package/react-native-dotenv)
   - React Native Elements [link](https://reactnativeelements.com/docs)
-
+  - Expo Vector Icon [link](https://docs.expo.dev/guides/icons/)
+  - React Native Deck Swiper [link](https://www.npmjs.com/package/react-native-deck-swiper)
 
 ##### Note 1: 
 
@@ -27,6 +28,7 @@
   - react-native-screens 
   - react-native-safe-area-context
   - firebase
+  - @expo/vector-icons
 
 ##### Note 2:
 

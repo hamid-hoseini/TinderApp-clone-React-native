@@ -1,17 +1,18 @@
 import { Avatar } from '@rneui/base'
 import { useEffect, useLayoutEffect, useState } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import CustomeListItems from '../components/CustomeListItems'
 import { db, auth } from '../firebaseConfig'
-import { AntDesign, SimpleLineIcons } from '@expo/vector-icons'
+import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import useAuth from '../hooks/useAuth';
+import tw from 'tailwind-react-native-classnames';
 
 const HomeScreen = () => {
   const [chats, setChats] = useState([]);
   const [isLoading, setIsLoading] = useState(true)
   const navigation = useNavigation();
-  const { logOut } = useAuth();
+  const { user, logOut } = useAuth();
 
 useEffect(() => {
     const unsubscribe = db.collection("chats").onSnapshot((snapshot) => {
@@ -21,47 +22,24 @@ useEffect(() => {
           data: doc.data()
         }))
       );
-      // console.log(chats)
-
-
-      // snapshot.docs.map((doc) => (
-      //   console.log(doc.data())
-      // ))
       setIsLoading(false);
     });
     return unsubscribe;
   }, []);
 
-  const signOut = () => {
-    logOut().then(() => {
-      navigation.navigate('Login');
-    })
-  };
+  // const signOut = () => {
+  //   logOut().then(() => {
+  //     navigation.navigate('Login');
+  //   })
+  // };
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: "Signal",
-      headerStyle: { backgroundColor: "#fff" },
+      headerShown: false,
       headerTitleStyle: { color: "black" },
       headerTintColor: "black",
-      headerLeft: () => (
-        <View style={{ marginLeft: 20 }}>
-          <TouchableOpacity onPress={signOut} activeOpacity={0.5}>
-            <Avatar rounded source={{ uri: auth?.currentUser?.photoURL ? auth?.currentUser?.photoURL : 'https://i.pinimg.com/originals/ec/61/d3/ec61d3114cc5269485d508244f531bdf.png' }} />
-          </TouchableOpacity>
-        </View>
-      ),
-      headerRight: () => (
-        <View style={styles.iconsContainer}>
-          <TouchableOpacity activeOpacity={0.5}>
-            <AntDesign name='camerao' color="black" size={24} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("AddChat")} activeOpacity={0.5}>
-            <SimpleLineIcons name='pencil' color="black" size={24} />
-          </TouchableOpacity>
-        </View>
-      )
-    });
+    })
+    
   }, []);
 
   const enterChat = (id, chatName) => {
@@ -82,14 +60,33 @@ useEffect(() => {
 
   return (
     <SafeAreaView>
+      {/* Header */}
+      <View style={tw`flex-row items-center justify-between px-5`}>
+        <TouchableOpacity onPress={logOut}>
+          <Image
+            style={tw`h-10 w-10 rounded-full`}
+            source={{ uri: user?.photoURL ? user?.photoURL : 'https://i.pinimg.com/originals/ec/61/d3/ec61d3114cc5269485d508244f531bdf.png' }} 
+          />
+        </TouchableOpacity>
+        
+        <TouchableOpacity>
+          <Image style={tw`h-14 w-14`} source={require("../assets/logo.png")} />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
+          <Ionicons name="chatbubbles-sharp" size={30} />
+        </TouchableOpacity>
+      </View>
+      {/* End of Header */}
       <ScrollView>
-        { chats.map(({id, data: {chatName}}) => (
+        <Text>Here is Home</Text>
+        {/* { chats.map(({id, data: {chatName}}) => (
           <CustomeListItems 
             key={id} 
             id={id} 
             chatName={chatName}
             enterChat={enterChat}/>
-        ))}
+        ))} */}
       </ScrollView>
     </SafeAreaView>
   )
