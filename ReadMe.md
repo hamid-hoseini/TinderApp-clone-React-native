@@ -12,11 +12,10 @@
 
   ## Dependencies
   - Tailwind React Native Classnames [link](https://www.npmjs.com/package/tailwind-react-native-classnames)
-  - React Navigation [link](https://reactnavigation.org/)
   - React Native Safe Area Context [link](https://reactnavigation.org/)
-  - React Navigation Native [link](https://reactnavigation.org/)
+  - React Native Navigation  [link](https://reactnavigation.org/)
   - React Native Screens
-  - Native Stack Navigator [link](https://reactnavigation.org/docs/hello-react-navigation)
+  - React Native Stack Navigator [link](https://reactnavigation.org/docs/hello-react-navigation)
   - React Native Dotenv [link](https://www.npmjs.com/package/react-native-dotenv)
   - React Native Elements [link](https://reactnativeelements.com/docs)
   - Expo Vector Icon [link](https://docs.expo.dev/guides/icons/)

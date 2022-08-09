@@ -1,14 +1,16 @@
 import 'react-native-gesture-handler';
 import { StyleSheet } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+//import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen';
 import AddChatScreen from './screens/AddChatScreen';
 import ChatScreen from './screens/ChatScreen';
 import useAuth from './hooks/useAuth';
+import ModalScreen from './screens/ModalScreen';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 const globalScreenOptions = {
   headerStyle: { backgroundColor: "#FE4C6A" },
   headerTitleStyle: { color: "black" },
@@ -24,14 +26,19 @@ export default function StackNavigator() {
       screenOptions={globalScreenOptions}>
         { !user ? (
           <>
-          <Stack.Screen options={{title: "Sign In"}} name="Login" component={LoginScreen} />  
-          <Stack.Screen name="Register" component={RegisterScreen} />  
+            <Stack.Screen options={{title: "Sign In"}} name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
         </>
         ) : (
           <>
-          <Stack.Screen name="AddChat" component={AddChatScreen} />  
-          <Stack.Screen name="Chat" component={ChatScreen} />  
-          <Stack.Screen options={{headerLeft: () => { return null;}}} name="Home" component={HomeScreen} />  
+            <Stack.Group>
+              <Stack.Screen name="AddChat" component={AddChatScreen} />
+              <Stack.Screen name="Chat" component={ChatScreen} />
+              <Stack.Screen options={{headerLeft: () => { return null;}}} name="Home" component={HomeScreen} />
+            </Stack.Group>
+            <Stack.Group screenOptions={{ presentation: "modal"}}>
+              <Stack.Screen name="Modal" component={ModalScreen} />
+            </Stack.Group>
           </>
         )}
     </Stack.Navigator>
