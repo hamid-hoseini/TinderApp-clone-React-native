@@ -37,7 +37,7 @@ export default function StackNavigator() {
               <Stack.Screen options={{headerLeft: () => { return null;}}} name="Home" component={HomeScreen} />
             </Stack.Group>
             <Stack.Group screenOptions={{ presentation: "modal"}}>
-              <Stack.Screen name="Modal" component={ModalScreen} />
+              <Stack.Screen name="Modal" component={ModalScreen} options={{header: () => { return null;}}}/>
             </Stack.Group>
           </>
         )}
