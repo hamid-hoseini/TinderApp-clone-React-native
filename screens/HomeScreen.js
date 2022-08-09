@@ -15,43 +15,31 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const { user, logOut } = useAuth();
   const swipeRef = useRef();
-  const dummyData = [{
-    id: 1,
-    firstName: 'hamid',
-    lastName: 'Hosieni',
-    job: 'Software Engineer',
-    photoURL: 'https://avatars.githubusercontent.com/u/7660220?v=4',
-    age: 25
-  },
-  {
-    id: 2,
-    firstName: 'Kimia',
-    lastName: 'Tajzad',
-    job: 'Singer',
-    photoURL: 'https://shans.org/wp-content/uploads/2020/05/kimia-820x1024.jpg',
-    age: 25
-  },
-  {
-    id: 3,
-    firstName: 'Ema',
-    lastName: 'Gonzales',
-    job: 'Acteress',
-    photoURL: 'https://i.pinimg.com/736x/ac/65/7a/ac657a4aec5b3069140488921a60d9f6.jpg',
-    age: 25
-  }
-]
+  const [profiles, setProfiles] = useState([]);
 
-useEffect(() => {
-    const unsubscribe = db.collection("chats").onSnapshot((snapshot) => {
-      setChats(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data()
-        }))
-      );
+useLayoutEffect(() => 
+  db.collection("Users").onSnapshot((snapshot) => {
+    if (!snapshot.docs.length) {
+      navigation.navigate('Modal');
+    }
+  }), []);
+
+  useEffect(() => {
+    let unsibscribe;    
+    const fetchCards = async () => {
+      unsibscribe = db.collection("Users").onSnapshot((snapshot) => {
+        setProfiles(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
+          }))
+        );
+        });
+      }
+      
+      fetchCards();
       setIsLoading(false);
-    });
-    return unsubscribe;
+      return unsibscribe;
   }, []);
 
   // const signOut = () => {
@@ -111,7 +99,7 @@ useEffect(() => {
         <Swiper 
           ref={swipeRef}
           containerStyle={{ backgroundColor: "transparent" }}
-          cards={dummyData}
+          cards={profiles}
           stackSize={5}
           cardIndex={0}
           animateCardOpacity
@@ -141,7 +129,7 @@ useEffect(() => {
               }
             }
           }}
-          renderCard={(card) => (
+          renderCard={(card) => card ? (
             <View key={card.id} style={tw`relative bg-white h-3/4 rounded-xl`}>
               <Image 
                 style={tw`absolute top-0 h-full w-full rounded-xl`}
@@ -155,6 +143,19 @@ useEffect(() => {
               </View>
             </View>
 
+          ) : (
+            <View
+              style={[
+                tw`relative bg-white h-3/4 rounded-xl justify-center items-center`, styles.cardShadow
+              ]}
+            >
+              <Text style={tw`font-bold pb-5`}>No more profiles</Text>
+              <Image style={tw`h-20 w-full`}
+                height={100}
+                width={100}
+                source={{ uri: 'https://dikpora.jogjaprov.go.id/web_lama/assets/images/icon/no_data.png'}}
+              />
+            </View>
           )}
         />
       </View>

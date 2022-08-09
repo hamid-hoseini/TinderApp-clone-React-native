@@ -46,7 +46,7 @@ const ModalScreen = () => {
       </Text>
       <TextInput style={tw`text-center text-xl pb-2`}
         value={image}
-        onChangeText={(text) => setImage(text)}
+        onChangeText={setImage}
         placeholder="Enter a profile Pic URL"
       />
 
@@ -55,7 +55,7 @@ const ModalScreen = () => {
       </Text>
       <TextInput style={tw`text-center text-xl pb-2`}
         value={job}
-        onChangeText={(text) => setJob(text)}
+        onChangeText={setJob}
         placeholder="Enter your job"
       />
 
@@ -64,7 +64,7 @@ const ModalScreen = () => {
       </Text>
       <TextInput style={tw`text-center text-xl pb-2`}
         value={age}
-        onChangeText={(text) => setAge(text)}      
+        onChangeText={setAge}      
         placeholder="Enter you age"
         keyboardType='numeric'
         maxLength={2}
