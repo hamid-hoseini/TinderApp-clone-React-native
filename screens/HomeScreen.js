@@ -2,15 +2,17 @@ import { Avatar } from '@rneui/base'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import CustomeListItems from '../components/CustomeListItems'
-import { db, auth } from '../firebaseConfig'
+import { db } from '../firebaseConfig'
 import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import useAuth from '../hooks/useAuth';
 import tw from 'tailwind-react-native-classnames';
 import Swiper from 'react-native-deck-swiper'
+import { ThemeConsumer } from '@rneui/themed'
 
 const HomeScreen = () => {
   const [chats, setChats] = useState([]);
+  const [passes, setPasses] = useState([]);
   const [isLoading, setIsLoading] = useState(true)
   const navigation = useNavigation();
   const { user, logOut } = useAuth();
@@ -27,19 +29,48 @@ useLayoutEffect(() =>
   useEffect(() => {
     let unsibscribe;    
     const fetchCards = async () => {
-      unsibscribe = db.collection("Users").onSnapshot((snapshot) => {
-        setProfiles(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data()
-          }))
-        );
-        });
+      let passesIds = [];
+      await db.collection("Users")
+        .doc(user.uid)
+        .collection("passes")
+        .onSnapshot((snapshot) => {
+          passesIds = snapshot.docs.map((doc) => doc.id);
+
+          try {
+            const passesUserIds = passesIds.length > 0 ? passesIds : ["test"];
+              unsibscribe = db.collection("Users")
+              .where('id', 'not-in', passesUserIds)
+              .get()
+                .then((snapshot) => {
+                    setProfiles(
+                      snapshot.docs.filter(item => item.id !== user.uid).map((doc) => ({
+                        id: doc.id,
+                        ...doc.data()
+                      }))
+                    );
+                  }
+              ).catch ((error) => {
+                alert(error);
+              })
+
+              // unsibscribe = db.collection("Users").onSnapshot((snapshot) => {
+              //   setProfiles(
+              //     snapshot.docs.filter(item => item.id !== user.uid && (passesUserIds.indexOf(item.id) === -1)).map((doc) => ({
+              //       id: doc.id,
+              //       ...doc.data()
+              //     }))
+              //   );
+              // });
+          } 
+          catch(error) {
+            alert(error)
+          }
+       });
       }
       
-      fetchCards();
-      setIsLoading(false);
-      return unsibscribe;
+    fetchCards();
+    setIsLoading(false);
+    return unsibscribe;
   }, []);
 
   // const signOut = () => {
@@ -54,7 +85,6 @@ useLayoutEffect(() =>
       headerTitleStyle: { color: "black" },
       headerTintColor: "black",
     })
-    
   }, []);
 
   const enterChat = (id, chatName) => {
@@ -62,10 +92,31 @@ useLayoutEffect(() =>
       id,
       chatName
     })
+  };
+
+  const swipeLeft = async(cardIndex) => {
+    if (!profiles[cardIndex]) return;
+    const userSwiped = profiles[cardIndex];
+    try {
+      db.collection("Users").doc(user.uid).collection("passes").doc(userSwiped.id).set(userSwiped)
+    }
+    catch(error) {
+      alert(error);
+    }
+  }
+
+  const swipeRight = async(cardIndex) => {
+    if (!profiles[cardIndex]) return;
+    const userSwiped = profiles[cardIndex];
+    try {
+      db.collection("Users").doc(user.uid).collection("matches").doc(userSwiped.id).set(userSwiped)
+    }
+    catch(error) {
+      alert(error);
+    }
   }
 
   if (isLoading) {
-    //console.log('test');
     return <SafeAreaView>
       <Text>
         Loading...
@@ -104,11 +155,11 @@ useLayoutEffect(() =>
           cardIndex={0}
           animateCardOpacity
           verticalSwipe={false}
-          onSwipedLeft={() => {
-
+          onSwipedLeft={(cardIndex) => {
+            swipeLeft(cardIndex);
           }}
-          onSwipedRight={() => {
-
+          onSwipedRight={(cardIndex) => {
+            swipeRight(cardIndex);
           }}
           overlayLabels={{
             left: {
@@ -136,7 +187,7 @@ useLayoutEffect(() =>
                 source={{ uri: card.photoURL}} />
               <View style={[tw`absolute bottom-0 bg-white w-full flex-row justify-between items-center h-20 px-6 py-2 rounded-b-xl`, styles.cardShadow]}>
                 <View>
-                  <Text style={tw`text-xl font-bold`}>{card.firstName} {card.lastName}</Text>
+                  <Text style={tw`text-xl font-bold`}>{card.displayName}</Text>
                   <Text>{card.job}</Text>
                 </View>
                 <Text style={tw`text-2xl font-bold`}>{card.age}</Text>

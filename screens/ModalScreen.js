@@ -15,7 +15,6 @@ const ModalScreen = () => {
   const [age, setAge] = useState(null);
   const navigation = useNavigation();
   const incompleteForm = !image || !age || !job
-  console.log(user.user.uid);
   const updateUserProfile = () => {
     db.collection("Users").doc(user.user.uid).set({
       photoURL: image,
