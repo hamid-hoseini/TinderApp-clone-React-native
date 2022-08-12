@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 import useAuth from '../hooks/useAuth';
 import tw from 'tailwind-react-native-classnames';
 import Swiper from 'react-native-deck-swiper'
+import firebase from 'firebase/compat/app';
 import { ThemeConsumer } from '@rneui/themed'
 
 const HomeScreen = () => {
@@ -30,7 +31,7 @@ useLayoutEffect(() =>
     let unsibscribe;    
     const fetchCards = async () => {
       let passesIds = [];
-      await db.collection("Users")
+      unsibscribe = await db.collection("Users")
         .doc(user.uid)
         .collection("passes")
         .onSnapshot((snapshot) => {
@@ -38,7 +39,7 @@ useLayoutEffect(() =>
 
           try {
             const passesUserIds = passesIds.length > 0 ? passesIds : ["test"];
-              unsibscribe = db.collection("Users")
+              db.collection("Users")
               .where('id', 'not-in', passesUserIds)
               .get()
                 .then((snapshot) => {
@@ -108,8 +109,59 @@ useLayoutEffect(() =>
   const swipeRight = async(cardIndex) => {
     if (!profiles[cardIndex]) return;
     const userSwiped = profiles[cardIndex];
+    let loggedInProfile, matchedProfile;
+    
+    await(await db.collection("Users").doc(user.uid)
+      .get().then((doc) => {
+          if (doc.exists) {
+            loggedInProfile = doc.data();
+          } else {
+              // doc.data() will be undefined in this case
+              console.log("No such document1!");
+          }
+      }).catch((error) => {
+          alert("Error getting document:", error);
+      }));
+
+      await(await db.collection("Users").doc(userSwiped.id).collection("swipes").doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            // user has matched with you before you matched with them...
+            matchedProfile = doc.data();
+
+            // Create a match...
+            db.collection("Matches").doc(user.uid + userSwiped.id).set({
+              users: {
+                [user.uid]: loggedInProfile,
+                [userSwiped.id]: userSwiped
+              },
+              userMatched: [user.uid, userSwiped.id],
+              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            })
+            .then(() => {
+              navigation.navigate('Match', {
+                loggedInProfile,
+                userSwiped
+              });
+            })
+            .catch((error) => {
+              alert(error);
+            });
+
+          } else {
+              console.log("No such document2!");
+              console.log(userSwiped.id);
+              console.log(user.uid);
+          }
+        })
+        .catch((error) => {
+          alert("Error getting document:", error);
+      }));
+      
+
     try {
-      db.collection("Users").doc(user.uid).collection("matches").doc(userSwiped.id).set(userSwiped)
+      db.collection("Users").doc(user.uid).collection("swipes").doc(userSwiped.id).set(userSwiped);
     }
     catch(error) {
       alert(error);

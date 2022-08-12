@@ -9,6 +9,7 @@
   4. Using Environment variables and setup 
   5. Firebase authentication and sign in & sign up using email and password
   6. Using **useMemo** to memoize expensive functions so that you can avoid calling them on every render. [Read more...](https://usehooks.com/useMemo/)
+  7. Using Swiper package in order to show data inside cards and swipe them [Read more...](https://github.com/webraptor/react-native-deck-swiper)
 
   ## Dependencies
   - Tailwind React Native Classnames [link](https://www.npmjs.com/package/tailwind-react-native-classnames)
