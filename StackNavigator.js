@@ -34,7 +34,7 @@ export default function StackNavigator() {
           <>
             <Stack.Group>
               <Stack.Screen name="AddChat" component={AddChatScreen} />
-              <Stack.Screen name="Chat" component={ChatScreen} />
+              <Stack.Screen name="Chat" component={ChatScreen} options={{header: () => { return null;}}}/>
               <Stack.Screen options={{headerLeft: () => { return null;}}} name="Home" component={HomeScreen} />
             </Stack.Group>
             <Stack.Group screenOptions={{ presentation: "modal"}}>

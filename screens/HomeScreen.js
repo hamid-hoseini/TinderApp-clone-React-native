@@ -1,8 +1,7 @@
 import { Avatar } from '@rneui/base'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
-import CustomeListItems from '../components/CustomeListItems'
-import { db } from '../firebaseConfig'
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { db } from '../firebaseConfig';
 import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import useAuth from '../hooks/useAuth';
@@ -14,7 +13,7 @@ import { ThemeConsumer } from '@rneui/themed'
 const HomeScreen = () => {
   const [chats, setChats] = useState([]);
   const [passes, setPasses] = useState([]);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
   const { user, logOut } = useAuth();
   const swipeRef = useRef();
