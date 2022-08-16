@@ -6,25 +6,27 @@ import getMatchedUserInfo from '../lib/getMatchedUserInfo';
 import tw from 'tailwind-react-native-classnames';
 
 
-const ChatRow = ({ matchDetails }) => {
+const ChatRow = ({matchDetails}) => {
   const navigation = useNavigation();
   const { user } = useAuth();
-  const [matchedUserInfo, setMatchedUserInfo] = useState();
-  console.log(matchDetails);
-  useEffect(() => {
+  const [matchedUserInfo, setMatchedUserInfo] = useState(null);
 
-    setMatchedUserInfo(getMatchedUserInfo(matchDetails.users, user.uid));
-  }, [matchDetails, user]);
+  useEffect(() => {
+     if (matchDetails) {
+      setMatchedUserInfo(getMatchedUserInfo(matchDetails.users, user.uid));
+     }
+  }, [matchDetails]);
   
   return (
-    <TouchableOpacity
-      style={[tw`flex-row items-center py-3 px-5 bg-white mx-3 my-1 rounded-lg`, styles.cardShadow]}
-    >
-      <Image 
-        style={tw`rounded-full h-16 w-16 mr-4`} 
-        source={{ uri: matchedUserInfo?.photoURL }}
-      />
-    </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[tw`flex-row items-center py-3 px-5 bg-white mx-3 my-1 rounded-lg`, styles.cardShadow]}
+      >
+        <Image 
+          style={tw`rounded-full h-16 w-16 mr-4`} 
+          source={{ uri: matchedUserInfo?.photoURL }}
+        />
+      </TouchableOpacity>
   )
 }
 

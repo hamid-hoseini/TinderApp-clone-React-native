@@ -23,13 +23,13 @@ const ChatList = () => {
           //       ...doc.data()
           //     }))
           //   );
-            let matched = snapshot.docs.map((doc) => ({
+          setMatches( snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data()
               }))
-              
-             // setMatches(matched);
-             setValue(matched);
+          );
+             //setMatches((prevData) => [...prevData, ...matched]);
+             
           setIsLoading(false);
             
           }
@@ -43,7 +43,7 @@ const ChatList = () => {
   }, [])
 
   const setValue = (data) => {
-    setMatches((data) => data);
+    //setMatches((data) => [...data);
   }
 
   if (isLoading) {
@@ -63,10 +63,10 @@ const ChatList = () => {
     <FlatList
       style={tw`h-full`}
       data={matches}
-      keyExtractor={item => item.id}
+      keyExtractor={(item) => item.id}
       renderItem={({item}) => {
-        //console.log(item.users[user.uid]);
-        <ChatRow matchDetailes={item} />}
+        //console.log(item);
+        return <ChatRow matchDetails={item} />}
       }
     />
   ) 
