@@ -21,11 +21,18 @@ const ChatRow = ({matchDetails}) => {
 
       <TouchableOpacity
         style={[tw`flex-row items-center py-3 px-5 bg-white mx-3 my-1 rounded-lg`, styles.cardShadow]}
+        onPress={() => navigation.navigate("Message", {matchDetails})}
       >
         <Image 
           style={tw`rounded-full h-16 w-16 mr-4`} 
           source={{ uri: matchedUserInfo?.photoURL }}
         />
+        <View>
+          <Text style={tw`text-lg font-semibold`}>
+            {matchedUserInfo?.displayName}
+          </Text>
+          <Text>Say Hi!</Text>
+        </View>
       </TouchableOpacity>
   )
 }
