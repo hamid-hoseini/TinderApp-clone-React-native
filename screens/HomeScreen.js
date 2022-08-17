@@ -98,7 +98,7 @@ useLayoutEffect(() =>
     if (!profiles[cardIndex]) return;
     const userSwiped = profiles[cardIndex];
     try {
-      db.collection("Users").doc(user.uid).collection("passes").doc(userSwiped.id).set(userSwiped)
+      db.collection("Users").doc(user.uid).collection().doc(userSwiped.id).set(userSwiped)
     }
     catch(error) {
       alert(error);
