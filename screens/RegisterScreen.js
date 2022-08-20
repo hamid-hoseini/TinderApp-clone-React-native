@@ -15,19 +15,6 @@ const RegisterScreen = () => {
   const { signUp } = useAuth();
   const navigation = useNavigation();
 
-  // const register = () => {
-  //   auth
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then((authUser) => {
-  //       authUser.user.updateProfile({
-  //         displayName: name,
-  //         photoURL: null
-  //       })
-  //     }).catch((error) => {
-  //       alert(error.message)
-  //     })
-  // }
-
   const register = async () => {
     try {
       setError("");
@@ -37,7 +24,6 @@ const RegisterScreen = () => {
       setError(err.message);
     }
   }
-
 
   useLayoutEffect(() => {
     navigation.setOptions({

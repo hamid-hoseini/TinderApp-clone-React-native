@@ -38,6 +38,9 @@
 >     expo r -c
 >     expo start --clear
 
+## App overview
+![Tinder-clone](https://user-images.githubusercontent.com/7660220/185729543-a2813a3c-4c0a-4f4f-a139-ad2e42ea1b62.png)
+
 ## React Context Example
 
 > Use react context and create custom Hook

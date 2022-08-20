@@ -14,37 +14,24 @@ const ChatList = () => {
     let unsibscribe;   
     const fetchMatched = async () => {
       unsibscribe = await db.collection("Matches")
-        .where('userMatched', 'array-contains', user.uid)
+        .where('userMatched', 'array-contains', user.uid.trim())
         .get()
         .then((snapshot) => {
-          // setMatches(
-          //     snapshot.docs.map((doc) => ({
-          //       id: doc.id,
-          //       ...doc.data()
-          //     }))
-          //   );
           setMatches( snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data()
               }))
-          );
-             //setMatches((prevData) => [...prevData, ...matched]);
-             
+          );             
           setIsLoading(false);
             
           }
         ).catch ((error) => {
           alert(error);
         });
-
       }
       fetchMatched();
     return unsibscribe;
-  }, [])
-
-  const setValue = (data) => {
-    //setMatches((data) => [...data);
-  }
+  }, []);
 
   if (isLoading) {
     return <SafeAreaView>
@@ -54,25 +41,19 @@ const ChatList = () => {
     </SafeAreaView>
   }
 
-  // return (
-  //   <View>
-  //     <Text>done!</Text>
-  //   </View>
-  // )
   return matches.length > 0 ? (
     <FlatList
       style={tw`h-full`}
       data={matches}
       keyExtractor={(item) => item.id}
       renderItem={({item}) => {
-        //console.log(item);
         return <ChatRow matchDetails={item} />}
       }
     />
   ) 
   : (
     <View style={tw`p-5`}>
-      <Text style={tw`text-center text-lg`}>No Matches at the moment!</Text>
+      <Text style={tw`text-center text-lg`}>No Matches at this moment!</Text>
     </View>
   )
 }

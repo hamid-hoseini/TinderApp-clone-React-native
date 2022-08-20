@@ -35,7 +35,6 @@ const MessageScreen = () => {
 
   const sendMessage = () => {
     try {
-      console.log(matchDetails);
       db.collection("Matches").doc(matchDetails.id).collection("messages").add({
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         userId: user.uid,

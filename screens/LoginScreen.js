@@ -13,16 +13,6 @@ const LoginScreen = () => {
   const navigation = useNavigation();
   const { signIn, loading } = useAuth();
 
-  useEffect(() => {
-    // const unsubscribe = auth.onAuthStateChanged((authUser) => {
-    //   if (authUser) {
-    //     navigation.replace('Home');
-    //   }
-    // })
-
-    // return unsubscribe;
-  }, []);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false
@@ -33,7 +23,6 @@ const LoginScreen = () => {
     try {
       setError("");
       await signIn(email, password);
-      //navigation.navigate('HomePHomeage');
     } catch (err) {
       setError(err.message);
       alert(err);

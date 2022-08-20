@@ -52,15 +52,6 @@ useLayoutEffect(() =>
               ).catch ((error) => {
                 alert(error);
               })
-
-              // unsibscribe = db.collection("Users").onSnapshot((snapshot) => {
-              //   setProfiles(
-              //     snapshot.docs.filter(item => item.id !== user.uid && (passesUserIds.indexOf(item.id) === -1)).map((doc) => ({
-              //       id: doc.id,
-              //       ...doc.data()
-              //     }))
-              //   );
-              // });
           } 
           catch(error) {
             alert(error)
@@ -72,12 +63,6 @@ useLayoutEffect(() =>
     setIsLoading(false);
     return unsibscribe;
   }, []);
-
-  // const signOut = () => {
-  //   logOut().then(() => {
-  //     navigation.navigate('Login');
-  //   })
-  // };
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -98,7 +83,7 @@ useLayoutEffect(() =>
     if (!profiles[cardIndex]) return;
     const userSwiped = profiles[cardIndex];
     try {
-      db.collection("Users").doc(user.uid).collection().doc(userSwiped.id).set(userSwiped)
+      db.collection("Users").doc(user.uid).collection("passes").doc(userSwiped.id).set(userSwiped)
     }
     catch(error) {
       alert(error);
@@ -122,7 +107,7 @@ useLayoutEffect(() =>
           alert("Error getting document:", error);
       }));
 
-      await(await db.collection("Users").doc(userSwiped.id).collection("swipes").doc(user.uid)
+      await(await db.collection("Users").doc(userSwiped.id.trim()).collection("swipes").doc(user.uid)
         .get()
         .then((doc) => {
           if (doc.exists) {
@@ -150,15 +135,12 @@ useLayoutEffect(() =>
 
           } else {
               console.log("No such document2!");
-              console.log(userSwiped.id);
-              console.log(user.uid);
           }
         })
         .catch((error) => {
           alert("Error getting document:", error);
       }));
       
-
     try {
       db.collection("Users").doc(user.uid).collection("swipes").doc(userSwiped.id).set(userSwiped);
     }
